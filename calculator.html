@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Basic Calculator</title>
+  <title>Engineering Calculator</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -18,8 +18,8 @@
   </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
-  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm">
-    <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Calculator</h1>
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Engineering Calculator</h1>
     <input
       id="display"
       type="text"
@@ -27,28 +27,41 @@
       class="w-full mb-4 p-3 text-right text-2xl rounded border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-blue-500"
       aria-label="Calculator display"
     />
-    <div class="grid grid-cols-4 gap-3">
+    <div class="grid grid-cols-6 gap-3">
+      <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="sin(">sin</button>
+      <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="cos(">cos</button>
+      <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="tan(">tan</button>
+      <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="log10(">log</button>
+      <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="Math.log(">ln</button>
+      <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="Math.sqrt(">√</button>
+
       <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="7">7</button>
       <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="8">8</button>
       <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="9">9</button>
       <button class="btn bg-blue-500 hover:bg-blue-600 text-white rounded text-lg font-semibold" data-value="/">&#247;</button>
+      <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="(">(</button>
+      <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value=")">)</button>
 
       <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="4">4</button>
       <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="5">5</button>
       <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="6">6</button>
       <button class="btn bg-blue-500 hover:bg-blue-600 text-white rounded text-lg font-semibold" data-value="*">&times;</button>
+      <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="Math.pow(">xʸ</button>
+      <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="Math.E">e</button>
 
       <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="1">1</button>
       <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="2">2</button>
       <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="3">3</button>
       <button class="btn bg-blue-500 hover:bg-blue-600 text-white rounded text-lg font-semibold" data-value="-">-</button>
-
       <button id="clear" class="btn bg-red-500 hover:bg-red-600 text-white rounded text-lg font-semibold" aria-label="Clear">
         <i class="fas fa-backspace"></i>
       </button>
+      <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="Math.PI">π</button>
+
       <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value="0">0</button>
       <button class="btn bg-gray-200 hover:bg-gray-300 rounded text-lg font-semibold" data-value=".">.</button>
       <button id="equals" class="btn bg-green-500 hover:bg-green-600 text-white rounded text-lg font-semibold" aria-label="Equals">=</button>
+      <button class="btn bg-blue-500 hover:bg-blue-600 text-white rounded text-lg font-semibold" data-value="+">+</button>
     </div>
   </div>
 
@@ -73,8 +86,10 @@
 
     equalsBtn.addEventListener('click', () => {
       try {
+        // Replace ^ with Math.pow for exponentiation
+        let expression = display.value.replace(/Math\.pow\(/g, 'Math.pow(');
         // Evaluate the expression safely
-        const result = Function('"use strict";return (' + display.value + ')')();
+        const result = Function('"use strict";return (' + expression + ')')();
         display.value = result;
       } catch (e) {
         display.value = 'Error';
